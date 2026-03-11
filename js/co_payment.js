@@ -44,3 +44,10 @@
 
 */
 
+window.addEventListener("load", function(){
+   // Retrieve the field/value pairs from the URL
+   var formData = location.search.slice(1);
+   formData = formData.replace(/\+/g," ");
+   formData = decodeURIComponent(formData);
+   var formFields = formData.split(//[&=]/g);
+} );

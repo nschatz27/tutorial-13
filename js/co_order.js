@@ -37,6 +37,15 @@
       calcOrder();
    });
 
+   // Event Handlers for the web form
+   orderForm.elements.model.onchange = calcOrder;
+   orderForm.elements.qty.onchange = calcOrder;
+
+   var planOptions = document.querySelectorAll('input[name="protection"]');
+   for (var i = 0; i < planOptions.length; i++) {
+      planOptions[i].onclick = calcOrder;
+   }
+
    function calcOrder() {
       var orderForm = document.forms.orderForm;
 
@@ -65,11 +74,18 @@
       var totalCost = initialCost + pCost + salesTax;
       orderForm.elements.totalCost.value = formatUSCurrency(totalCost);
 
-      function formatNumber (val, decimals) {
-         return val.toLocaleString(undefined, {minimumFractionDigits: decimals, maximumFractionDigits: decimals});
-      }
+      // Store the order details
+      orderForm.elements.modelName.value =
+         orderForm.elements.model.options[mIndex].text;
+      orderForm.elements.protectionName.value =
+         document.querySelector('input[name="protection"]:checked').nextSibling.nodeValues;
 
-      function formatUSCurrency(val) {
-         return val.toLocaleString('en-US', {style: "currency", currency: "USD"});
-      }
+   function formatNumber(val, decimals) {
+      return val.toLocaleString(undefined, {minimumFractionDigists: decimals, maximumFractionDigists: decimals});
    }
+
+   function formatUSCurrency(val) {
+      return val.toLocaleString('en-US', {style: "currency", currency: "USD"} );
+   }
+
+}
